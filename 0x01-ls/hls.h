@@ -11,4 +11,5 @@
 #include <stdbool.h>
 #include <pwd.h>
 #include <grp.h>
+int _strcmp(char *s1, char *s2);
 #endif /*LS_H*/

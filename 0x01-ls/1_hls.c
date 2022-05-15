@@ -17,8 +17,8 @@ int main(int argc, char *argv[])
 		if (argv[1] == NULL)
 		{
 			dir = opendir(".");
-			while (((read = readdir(dir)) != NULL) && (strcmp(read->d_name,
-					".") != 0) && (strcmp(read->d_name, "..") != 0))
+			while (((read = readdir(dir)) != NULL) && (_strcmp(read->d_name,
+					".") != 0) && (_strcmp(read->d_name, "..") != 0))
 				printf("%s ", read->d_name);
 		}
 		else
