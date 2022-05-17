@@ -27,6 +27,7 @@ int main(int argc, char *argv[])
 		}
 		if (chk_no_dir(dir, path) == 1)
 			return (0);
+
 		print_dir(dir);
 		closedir(dir);
 	}
@@ -45,12 +46,13 @@ int chk_no_dir(DIR *dir, char *path)
 {
 	char *no_access_error;
 
-	no_access_error = str_concat("cannot access ", path);
 	if (!dir)
 	{
 		if (errno == ENOENT)
 		{
+			no_access_error = str_concat("cannot access ", path);
 			perror(no_access_error);
+			free(no_access_error);
 			return (1);
 		}
 	}
