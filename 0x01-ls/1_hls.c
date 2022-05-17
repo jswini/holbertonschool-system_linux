@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 			dir = opendir(".");
 			while (((read = readdir(dir)) != NULL) && (_strcmp(read->d_name,
 					".") != 0) && (_strcmp(read->d_name, "..") != 0))
-					printf("%s  ", read->d_name);
+				printf("%s  ", read->d_name);
 		}
 		else
 		{
