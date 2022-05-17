@@ -11,23 +11,29 @@ int main(int argc, char *argv[])
 {
 	DIR *dir;
 	struct dirent *read;
+	//struct stat sb;
 
 	if (argc >= 1)
 	{
-		if (argv[1] == NULL)
+		/* if (lstat(argv[1], &sb) == -1)
+            return(-1);
+		else */
 		{
-			dir = opendir(".");
-			while (((read = readdir(dir)) != NULL) && (_strcmp(read->d_name,
-					".") != 0) && (_strcmp(read->d_name, "..") != 0))
-				printf("%s ", read->d_name);
+			if (argv[1] == NULL)
+			{
+				dir = opendir(".");
+				while (((read = readdir(dir)) != NULL) && (_strcmp(read->d_name,
+						".") != 0) && (_strcmp(read->d_name, "..") != 0))
+						printf("%s  ", read->d_name);
+			}
+			else
+			{
+				dir = opendir(argv[1]);
+				while ((read = readdir(dir)) != NULL)
+					printf("%s\n", read->d_name);
+			}
+			closedir(dir);
 		}
-		else
-		{
-			dir = opendir(argv[1]);
-			while ((read = readdir(dir)) != NULL)
-				printf("%s\n", read->d_name);
-		}
-		closedir(dir);
 	}
 	printf("\n");
 	return (0);
