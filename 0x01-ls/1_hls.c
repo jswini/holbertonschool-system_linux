@@ -10,26 +10,64 @@
 int main(int argc, char *argv[])
 {
 	DIR *dir;
-	struct dirent *read;
+	char *path;
 
 	if (argc >= 1)
 	{
+
 		if (argv[1] == NULL)
 		{
+			path = ".";
 			dir = opendir(".");
-			while (((read = readdir(dir)) != NULL) && (_strcmp(read->d_name,
-					".") != 0) && (_strcmp(read->d_name, "..") != 0))
-				printf("%s  ", read->d_name);
 		}
 		else
 		{
-			dir = opendir(argv[1]);
-			while ((read = readdir(dir)) != NULL)
-				printf("%s\n", read->d_name);
+			path = argv[1];
+			dir = opendir(path);
 		}
+		if (chk_no_dir(dir, path) == 1)
+			return (0);
+		print_dir(dir);
 		closedir(dir);
 	}
-
 	printf("\n");
 	return (0);
+}
+
+/**
+* chk_no_dir - checks if a directory exists
+* @dir: directory object to be checking with
+* @path: path to directory to check
+*
+* Return: void
+*/
+int chk_no_dir(DIR *dir, char *path)
+{
+	char *no_access_error;
+
+	no_access_error = str_concat("cannot access ", path);
+	if (!dir)
+	{
+		if (errno == ENOENT)
+		{
+			perror(no_access_error);
+			return (1);
+		}
+	}
+	return (0);
+}
+
+/**
+ * print_dir - prints the contents of the directory
+ * @dir: the directory object to print
+ *
+ * Return: void
+ */
+void print_dir(DIR *dir)
+{
+	struct dirent *read;
+
+	while (((read = readdir(dir)) != NULL) && (_strcmp(read->d_name,
+			".") != 0) && (_strcmp(read->d_name, "..") != 0))
+	printf("%s  ", read->d_name);
 }
