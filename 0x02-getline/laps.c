@@ -2,20 +2,22 @@
 
 void race_state(int *id, size_t size)
 {
-    static race_list *head;
-    printf("0");
-    race_list current = *head;
+	static race_list *head;
+	race_list *current;
+	printf("0");
+	current = malloc(sizeof(race_list));
+	current = head;
 
     if (size == 0)
         free_race(head);
     else
     {
         /*check id and create or increment cars*/
-        while (current.next != NULL)
+        while (current->next != NULL)
         {
-            if (current.car_num == *id)
+            if (current->car_num == *id)
             {
-                current.lap_num = current.lap_num + 1;
+                current->lap_num = current->lap_num + 1;
                 printf("1");
             }
              else
