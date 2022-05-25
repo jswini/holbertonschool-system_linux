@@ -12,25 +12,39 @@ int main(int argc, char *argv[])
 	DIR *dir;
 	char *path;
 
+	printf("1");
+	
 	if (argc >= 1)
 	{
+		
+	printf("2");
 
 		if (argv[1] == NULL)
 		{
+
+	printf("3");
 			path = ".";
 			dir = opendir(".");
 		}
 		else
 		{
+
+	printf("4");
 			path = argv[1];
 			dir = opendir(path);
 		}
 		if (chk_no_dir(dir, path) == 1)
+		{
+
+	printf("5");
 			return (0);
+		}
+	printf("6");
 
 		print_dir(dir);
 		closedir(dir);
 	}
+	printf("7");
 	printf("\n");
 	return (0);
 }
@@ -69,7 +83,13 @@ void print_dir(DIR *dir)
 {
 	struct dirent *read;
 
-	while (((read = readdir(dir)) != NULL) && (_strcmp(read->d_name,
-			".") != 0) && (_strcmp(read->d_name, "..") != 0))
-	printf("%s  ", read->d_name);
+	printf("8");
+	//while (((read = readdir(dir)) != NULL) && (_strcmp(read->d_name,
+	//		".") != 0) && (_strcmp(read->d_name, "..") != 0))
+	
+	while (((read = readdir(dir)) != NULL))
+	{
+		printf("9");
+		printf("%s  ", read->d_name);
+	}
 }
