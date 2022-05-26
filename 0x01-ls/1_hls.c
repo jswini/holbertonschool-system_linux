@@ -73,7 +73,8 @@ void print_dir(DIR *dir)
 
 	while (((read = readdir(dir)) != NULL))
 	{
-		if ((_strcmp(read->d_name, ".") != 0) && _strcmp(read->d_name, "..") != 0)
+		if ((_strncmp(read->d_name, ".", 1) != 0)
+			&& _strncmp(read->d_name, "..", 2) != 0)
 		{
 			printf("%s  ", read->d_name);
 		}

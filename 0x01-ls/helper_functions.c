@@ -3,14 +3,15 @@
  * _strcmp - compares strings and returns 0 if same or a number if different
  * @s1: first string
  * @s2: second string
+ * @size: number of chars to compare in string
  *
  * Return: 0 if same, pos if s1 < s2 or neg if s1 < s2
  */
-int _strcmp(char *s1, char *s2)
+int _strncmp(char *s1, char *s2, size_t size)
 {
 	int i;
 
-	for (i = 0; s1[i] != '\0'; i++)
+	for (i = 0; size > 0; i++, size--)
 	{
 		if (s1[i] == s2[i])
 			continue;

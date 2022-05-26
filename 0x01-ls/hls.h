@@ -12,7 +12,7 @@
 #include <pwd.h>
 #include <grp.h>
 #include <errno.h>
-int _strcmp(char *s1, char *s2);
+int _strncmp(char *s1, char *s2, size_t size);
 char *str_concat(char *s1, char *s2);
 int _strlen(char *s);
 int chk_no_dir(DIR *dir, char *path);
