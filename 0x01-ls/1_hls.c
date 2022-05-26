@@ -15,20 +15,18 @@ int main(int argc, char *argv[])
 
 	if (argc >= 1)
 	{
-
 		for (i = 1; i < argc; i++)
 		{
 			if (argv[1] == NULL)
-				{
-					path = ".";
-					dir = opendir(".");
-				}
+			{
+				path = ".";
+				dir = opendir(".");
+			}
 			else
-				{
-
-					path = argv[i];
-					dir = opendir(path);
-				}
+			{
+				path = argv[i];
+				dir = opendir(path);
+			}
 			if (chk_no_dir(*argv, dir, path) == 1)
 			{
 				return (0);
@@ -48,6 +46,7 @@ int main(int argc, char *argv[])
 * chk_no_dir - checks if a directory exists
 * @dir: directory object to be checking with
 * @path: path to directory to check
+* @argv: array of arguments to main
 *
 * Return: void
 */
@@ -56,6 +55,7 @@ int chk_no_dir(char *argv, DIR *dir, char *path)
 	char *program_name;
 	char *no_access_error;
 	char *cannot_access;
+
 	if (!dir)
 	{
 		program_name = &argv[0];
@@ -74,6 +74,7 @@ int chk_no_dir(char *argv, DIR *dir, char *path)
 /**
  * print_dir - prints the contents of the directory
  * @dir: the directory object to print
+ * @path: name of directory object
  *
  * Return: void
  */
