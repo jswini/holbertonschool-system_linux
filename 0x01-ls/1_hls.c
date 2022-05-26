@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 					path = argv[i];
 					dir = opendir(path);
 				}
-			if (chk_no_dir(dir, path) == 1)
+			if (chk_no_dir(*argv, dir, path) == 1)
 			{
 				return (0);
 			}
@@ -51,15 +51,18 @@ int main(int argc, char *argv[])
 *
 * Return: void
 */
-int chk_no_dir(DIR *dir, char *path)
+int chk_no_dir(char *argv, DIR *dir, char *path)
 {
+	char *program_name;
 	char *no_access_error;
-
+	char *cannot_access;
 	if (!dir)
 	{
+		program_name = &argv[0];
 		if (errno == ENOENT)
 		{
-			no_access_error = str_concat("cannot access ", path);
+			cannot_access = str_concat(program_name, ": cannot access ");
+			no_access_error = str_concat(cannot_access, path);
 			perror(no_access_error);
 			free(no_access_error);
 			return (1);
