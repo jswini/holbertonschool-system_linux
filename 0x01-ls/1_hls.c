@@ -64,6 +64,7 @@ int chk_no_dir(char *argv, DIR *dir, char *path)
 			cannot_access = str_concat(program_name, ": cannot access ");
 			no_access_error = str_concat(cannot_access, path);
 			perror(no_access_error);
+			free(cannot_access);
 			free(no_access_error);
 			return (1);
 		}
