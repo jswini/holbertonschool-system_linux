@@ -11,29 +11,36 @@ int main(int argc, char *argv[])
 {
 	DIR *dir;
 	char *path;
+	int i;
 
 	if (argc >= 1)
 	{
 
-		if (argv[1] == NULL)
+		for (i = 1; i < argc; i++)
 		{
-			path = ".";
-			dir = opendir(".");
-		}
-		else
-		{
+			if (argv[1] == NULL)
+				{
+					path = ".";
+					dir = opendir(".");
+				}
+			else
+				{
 
-			path = argv[1];
-			dir = opendir(path);
+					path = argv[i];
+					dir = opendir(path);
+				}
+			if (chk_no_dir(dir, path) == 1)
+			{
+				return (0);
+			}
+			print_dir(dir, path);
+			if ((i + 1) != argc)
+			{
+				printf("\n");
+			}
+			closedir(dir);
 		}
-		if (chk_no_dir(dir, path) == 1)
-		{
-			return (0);
-		}
-		print_dir(dir);
-		closedir(dir);
 	}
-	printf("\n");
 	return (0);
 }
 
@@ -67,10 +74,11 @@ int chk_no_dir(DIR *dir, char *path)
  *
  * Return: void
  */
-void print_dir(DIR *dir)
+void print_dir(DIR *dir, char *path)
 {
 	struct dirent *read;
 
+	printf("%s:\n", path);
 	while (((read = readdir(dir)) != NULL))
 	{
 		if ((_strncmp(read->d_name, ".", 1) != 0)
@@ -79,4 +87,5 @@ void print_dir(DIR *dir)
 			printf("%s  ", read->d_name);
 		}
 	}
+	printf("\n");
 }
