@@ -1,6 +1,6 @@
 #include "hls.h"
 /**
- * _strcmp - compares strings and returns 0 if same or a number if different
+ * _strncmp - compares strings and returns 0 if same or a number if different
  * @s1: first string
  * @s2: second string
  * @size: number of chars to compare in string
