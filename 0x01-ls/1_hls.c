@@ -13,33 +13,42 @@ int main(int argc, char *argv[])
 	char *path;
 	int i;
 
-	if (argc >= 1)
+	if (argc == 1)
 	{
-		for (i = 1; i < argc; i++)
-		{
-			if (argv[1] == NULL)
-			{
-				path = ".";
-				dir = opendir(".");
-			}
-			else
-			{
-				path = argv[i];
-				dir = opendir(path);
-			}
-			if (chk_no_dir(*argv, dir, path) == 1)
-			{
-				return (0);
-			}
-			print_dir(dir, path);
-			if ((i + 1) != argc)
-			{
-				printf("\n");
-			}
-			closedir(dir);
-		}
+		path = ".";
+		dir = opendir(path);
+		print_dir(dir);
 	}
+	else if (argc == 2)
+	{
+		path = argv[1];
+		dir = opendir(path);
+		if (chk_no_dir(*argv, dir, path) == 1)
+		{
+			return (0);
+		}
+		check_file_type(path);
+		print_dir(dir);
+	}
+	else
+	{
+		for (i = 1; i <= argc; i++)
+		{
+			path = argv[i];
+			if (check_file_type(path) == 2)
+			{
+				dir = opendir(path);
+				if (chk_no_dir(*argv, dir, path) == 1)
+				{
+					closedir(dir);
+					return (0);
+				}
+				print_mult_dir(path, dir, i, argc);
+				closedir(dir);
+			}
+		}
 	return (0);
+	}
 }
 
 /**
@@ -75,22 +84,50 @@ int chk_no_dir(char *argv, DIR *dir, char *path)
 /**
  * print_dir - prints the contents of the directory
  * @dir: the directory object to print
- * @path: name of directory object
  *
  * Return: void
  */
-void print_dir(DIR *dir, char *path)
+void print_dir(DIR *dir)
 {
 	struct dirent *read;
 
-	printf("%s:\n", path);
-	while (((read = readdir(dir)) != NULL))
-	{
+	while ((read = readdir(dir)) != NULL)
+		{
 		if ((_strncmp(read->d_name, ".", 1) != 0)
 			&& _strncmp(read->d_name, "..", 2) != 0)
 		{
 			printf("%s  ", read->d_name);
 		}
-	}
+		}
 	printf("\n");
+}
+
+/**
+ * print_mult_dir - formats output when more than 1 item requested
+ *
+ * @path: path to output
+ * @dir: directory pointer
+ * @i: place in loop
+ * @argc: number of args to main
+ */
+void print_mult_dir(char *path, DIR *dir, int i, int argc)
+{
+	struct dirent *read;
+
+	printf("%s:\n", path);
+	if (check_file_type(path) == 2)
+	{
+		while ((read = readdir(dir)) != NULL)
+		{
+			if ((_strncmp(read->d_name, ".", 1) != 0)
+				&& _strncmp(read->d_name, "..", 2) != 0)
+			{
+				printf("%s  ", read->d_name);
+			}
+		}
+		if (i != argc)
+		{
+			printf("\n");
+		}
+	}
 }

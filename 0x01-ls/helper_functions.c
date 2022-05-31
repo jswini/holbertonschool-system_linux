@@ -64,3 +64,40 @@ char *str_concat(char *s1, char *s2)
 	dest[len1 + len2] = '\0';
 	return (dest);
 }
+
+/**
+ * check_file_type - determines lstat mode of the file
+ * @path: location of file to check
+ * Return: -1 if error, pos int for other result
+ */
+int check_file_type(char *path)
+{
+	struct stat sb;
+
+	if (lstat(path, &sb) == -1)
+		return (-1);
+	if ((sb.st_mode & S_IFMT) == S_IFREG)
+	{
+		print_file_name(path);
+		return (1);
+	}
+	else if ((sb.st_mode & S_IFMT) == S_IFDIR)
+	{
+		return (2);
+	}
+	else
+	{
+		printf("not a file or directory");
+		return (3);
+	}
+}
+
+/**
+ * print_file_name - prints a file name if regfile
+ * @path: location of file
+ * return: Void
+ */
+void print_file_name(char *path)
+{
+	printf("%s\n", path);
+}
