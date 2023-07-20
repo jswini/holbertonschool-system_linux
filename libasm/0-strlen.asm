@@ -5,11 +5,11 @@ bits 64
 
 					;prologue
 asm_strlen:
-	
+
 	push rdi 		;save contents of rsi
 	push rcx		;save current contents of rcx
 	xor rcx, rcx	;set rcx to zero
-	
+
 _count_loop:
 	cmp byte [rdi], 0 ;
 	jz _end			;jump if zero
